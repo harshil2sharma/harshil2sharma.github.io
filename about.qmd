@@ -4,9 +4,9 @@ title: "About"
 
 ## Background
 
-I grew up and studied in India, and graduated in July 2024 with a B.Tech in Computer Science, specializing in Data Science, from Symbiosis Institute of Technology, Pune. Before that I interned at C-DOT in Delhi, working on deep-learning-based biometric face recognition and a multimodal disaster-management dashboard, and spent time as a data engineering researcher on the KG4ASTRA extension programme, building ontology and hierarchy graphs in Neo4j for missile classification NLP models.
+I'm currently pursuing the Master of Data Science program at the University of British Columbia. I grew up and studied in India, and graduated in July 2024 with a B.Tech in Computer Science, specializing in Data Science, from Symbiosis Institute of Technology, Pune. Before that I interned at C-DOT in Delhi, working on deep-learning-based biometric face recognition and a multimodal disaster-management dashboard, and spent time as a data engineering researcher on the KG4ASTRA extension programme, building ontology and hierarchy graphs in Neo4j for missile classification NLP models.
 
-Since September 2024 I've been a Data Scientist at **Fractal Analytics** in Bangalore, working across several client engagements:
+From September 2024 I was a Data Scientist at **Fractal Analytics** in Bangalore, working across several client engagements:
 
 - **Behavioural Data Science (BHP Australia)** — GenAI-driven safety risk modeling and cognitive/behavioral analytics using neuroscience inputs.
 - **Order Automation (Carrier, AWS GenAI)** — vision-language models (AWS Nova, Claude, Mistral) for PDF ingestion and RAG-based document understanding.
@@ -27,6 +27,6 @@ A few projects I've enjoyed building: an ML model classifying [hazardous asteroi
 
 ## Outside of data science
 
-When I'm away from a notebook, I'm usually running or cycling — training for the next race is a nice antidote to a week of debugging pipelines. I bake and cook more than is strictly reasonable, and I've picked up a handful of wins over the years in general knowledge, art, and dance competitions. I also volunteer as a content creator for **Kshamata** in Mumbai and **DefEating Disorders** in New York, and try to use whatever platform I have to advocate for human trafficking survivors and eating disorder awareness.
+When I'm away from a notebook, I'm usually running or cycling — training for the next race is a nice antidote to a week of debugging pipelines. I bake and cook more than is strictly reasonable, and I've picked up a handful of wins over the years in general knowledge, art, and dance competitions.
 
 You can find more of my work on [GitHub](https://github.com/harshil2sharma) or connect with me on [LinkedIn](https://www.linkedin.com/in/harshil-sharma-002ms2012/).
