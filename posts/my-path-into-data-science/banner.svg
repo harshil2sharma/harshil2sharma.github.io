@@ -1,27 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340" role="img" aria-label="A rising path from early research work, through Fractal Analytics, to UBC's Master of Data Science program, still in progress.">
   <rect width="900" height="340" fill="#f1ece3"/>
-  <g stroke="#c96a3f" stroke-width="1.5" opacity="0.55">
-    <line x1="120" y1="90" x2="300" y2="60"/>
-    <line x1="120" y1="90" x2="260" y2="190"/>
-    <line x1="300" y1="60" x2="470" y2="120"/>
-    <line x1="260" y1="190" x2="470" y2="120"/>
-    <line x1="470" y1="120" x2="650" y2="70"/>
-    <line x1="470" y1="120" x2="620" y2="230"/>
-    <line x1="260" y1="190" x2="430" y2="270"/>
-    <line x1="430" y1="270" x2="620" y2="230"/>
-    <line x1="650" y1="70" x2="800" y2="150"/>
-    <line x1="620" y1="230" x2="800" y2="150"/>
-    <line x1="620" y1="230" x2="760" y2="280"/>
-  </g>
-  <g fill="#b2532e">
-    <circle cx="120" cy="90" r="7"/>
-    <circle cx="300" cy="60" r="10"/>
-    <circle cx="260" cy="190" r="8"/>
-    <circle cx="470" cy="120" r="12"/>
-    <circle cx="430" cy="270" r="7"/>
-    <circle cx="650" cy="70" r="8"/>
-    <circle cx="620" cy="230" r="11"/>
-    <circle cx="800" cy="150" r="9"/>
-    <circle cx="760" cy="280" r="6"/>
-  </g>
+
+  <!-- ground line -->
+  <line x1="60" y1="290" x2="860" y2="290" stroke="#e2d9c8" stroke-width="1.5"/>
+
+  <!-- the path itself: solid where the story is told, dashed where it's still being written -->
+  <path d="M100,258 C210,232 300,205 400,178 C500,151 560,128 640,104"
+        fill="none" stroke="#b2532e" stroke-width="3" stroke-linecap="round"/>
+  <path d="M640,104 C700,86 750,74 790,64"
+        fill="none" stroke="#c96a3f" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 10"/>
+
+  <!-- arrowhead marking the road ahead -->
+  <path d="M778,50 L796,62 L780,76" fill="none" stroke="#c96a3f" stroke-width="3"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- waypoint 1: early research -->
+  <circle cx="100" cy="258" r="8" fill="#b2532e"/>
+  <text x="100" y="230" font-family="Georgia, 'Times New Roman', serif" font-size="19" font-weight="600"
+        fill="#2b2b2b" text-anchor="middle">Early research</text>
+  <text x="100" y="250" font-family="Helvetica, Arial, sans-serif" font-size="13"
+        fill="#6b6459" text-anchor="middle">C-DOT &#183; graph ML</text>
+
+  <!-- waypoint 2: fractal analytics -->
+  <circle cx="400" cy="178" r="8" fill="#b2532e"/>
+  <text x="400" y="150" font-family="Georgia, 'Times New Roman', serif" font-size="19" font-weight="600"
+        fill="#2b2b2b" text-anchor="middle">Fractal Analytics</text>
+  <text x="400" y="170" font-family="Helvetica, Arial, sans-serif" font-size="13"
+        fill="#6b6459" text-anchor="middle">GenAI in production</text>
+
+  <!-- waypoint 3: UBC MDS, marked as in progress -->
+  <circle cx="640" cy="104" r="15" fill="none" stroke="#b2532e" stroke-width="2" opacity="0.4"/>
+  <circle cx="640" cy="104" r="8" fill="#f1ece3" stroke="#b2532e" stroke-width="3"/>
+  <text x="640" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="19" font-weight="600"
+        fill="#2b2b2b" text-anchor="middle">UBC MDS</text>
+  <text x="640" y="132" font-family="Helvetica, Arial, sans-serif" font-size="13"
+        fill="#6b6459" text-anchor="middle">now</text>
 </svg>
