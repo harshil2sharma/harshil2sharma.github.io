@@ -1,38 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340" role="img" aria-label="A rising path from early research work, through Fractal Analytics, to UBC's Master of Data Science program, still in progress.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340" role="img"
+     aria-label="A wandering, uncertain line that gradually resolves into a single clean upward arc.">
+  <defs>
+    <linearGradient id="pathGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c9bda8"/>
+      <stop offset="55%" stop-color="#c96a3f"/>
+      <stop offset="100%" stop-color="#8f3f22"/>
+    </linearGradient>
+  </defs>
+
   <rect width="900" height="340" fill="#f1ece3"/>
+  <line x1="50" y1="290" x2="860" y2="290" stroke="#e2d9c8" stroke-width="1.5"/>
 
-  <!-- ground line -->
-  <line x1="60" y1="290" x2="860" y2="290" stroke="#e2d9c8" stroke-width="1.5"/>
+  <!-- false starts, scattered and faint -->
+  <circle cx="95" cy="172" r="3" fill="#b2532e" opacity="0.22"/>
+  <circle cx="168" cy="252" r="2.5" fill="#b2532e" opacity="0.22"/>
+  <circle cx="236" cy="178" r="3" fill="#b2532e" opacity="0.22"/>
 
-  <!-- the path itself: solid where the story is told, dashed where it's still being written -->
-  <path d="M100,258 C210,232 300,205 400,178 C500,151 560,128 640,104"
-        fill="none" stroke="#b2532e" stroke-width="3" stroke-linecap="round"/>
-  <path d="M640,104 C700,86 750,74 790,64"
-        fill="none" stroke="#c96a3f" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 10"/>
-
-  <!-- arrowhead marking the road ahead -->
-  <path d="M778,50 L796,62 L780,76" fill="none" stroke="#c96a3f" stroke-width="3"
+  <!-- the uncertain early stretch -->
+  <path d="M70,220 L110,193 L142,232 L182,198 L222,236 L262,205"
+        fill="none" stroke="#b7ac95" stroke-width="2.25" opacity="0.75"
         stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- waypoint 1: early research -->
-  <circle cx="100" cy="258" r="8" fill="#b2532e"/>
-  <text x="100" y="230" font-family="Georgia, 'Times New Roman', serif" font-size="19" font-weight="600"
-        fill="#2b2b2b" text-anchor="middle">Early research</text>
-  <text x="100" y="250" font-family="Helvetica, Arial, sans-serif" font-size="13"
-        fill="#6b6459" text-anchor="middle">C-DOT &#183; graph ML</text>
+  <!-- where it resolves into one clean line -->
+  <path d="M262,205 C342,176 418,160 480,140 C580,106 690,76 815,50"
+        fill="none" stroke="url(#pathGrad)" stroke-width="3.5" stroke-linecap="round"/>
 
-  <!-- waypoint 2: fractal analytics -->
-  <circle cx="400" cy="178" r="8" fill="#b2532e"/>
-  <text x="400" y="150" font-family="Georgia, 'Times New Roman', serif" font-size="19" font-weight="600"
-        fill="#2b2b2b" text-anchor="middle">Fractal Analytics</text>
-  <text x="400" y="170" font-family="Helvetica, Arial, sans-serif" font-size="13"
-        fill="#6b6459" text-anchor="middle">GenAI in production</text>
-
-  <!-- waypoint 3: UBC MDS, marked as in progress -->
-  <circle cx="640" cy="104" r="15" fill="none" stroke="#b2532e" stroke-width="2" opacity="0.4"/>
-  <circle cx="640" cy="104" r="8" fill="#f1ece3" stroke="#b2532e" stroke-width="3"/>
-  <text x="640" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="19" font-weight="600"
-        fill="#2b2b2b" text-anchor="middle">UBC MDS</text>
-  <text x="640" y="132" font-family="Helvetica, Arial, sans-serif" font-size="13"
-        fill="#6b6459" text-anchor="middle">now</text>
+  <circle cx="815" cy="50" r="7" fill="#8f3f22"/>
 </svg>
