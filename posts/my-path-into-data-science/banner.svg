@@ -1,29 +1,60 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340" role="img"
-     aria-label="A wandering, uncertain line that gradually resolves into a single clean upward arc.">
+     aria-label="A wandering, uncertain line that resolves and travels toward a warm point of light.">
   <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3eee5"/>
+      <stop offset="100%" stop-color="#f9e6d4"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e8935c" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#e8935c" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#e8935c" stop-opacity="0"/>
+    </radialGradient>
     <linearGradient id="pathGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#c9bda8"/>
+      <stop offset="0%" stop-color="#cabfa9"/>
       <stop offset="55%" stop-color="#c96a3f"/>
       <stop offset="100%" stop-color="#8f3f22"/>
     </linearGradient>
+    <filter id="blurLg" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <filter id="blurSm" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="4.5"/>
+    </filter>
   </defs>
 
-  <rect width="900" height="340" fill="#f1ece3"/>
-  <line x1="50" y1="290" x2="860" y2="290" stroke="#e2d9c8" stroke-width="1.5"/>
+  <rect width="900" height="340" fill="url(#sky)"/>
 
-  <!-- false starts, scattered and faint -->
-  <circle cx="95" cy="172" r="3" fill="#b2532e" opacity="0.22"/>
-  <circle cx="168" cy="252" r="2.5" fill="#b2532e" opacity="0.22"/>
-  <circle cx="236" cy="178" r="3" fill="#b2532e" opacity="0.22"/>
+  <!-- warm glow toward the top right, where the line arrives -->
+  <circle cx="815" cy="62" r="110" fill="url(#glow)" filter="url(#blurLg)"/>
 
-  <!-- the uncertain early stretch -->
+  <!-- soft out-of-focus particles drifting through the scene -->
+  <circle cx="110" cy="85" r="9" fill="#c96a3f" opacity="0.14" filter="url(#blurSm)"/>
+  <circle cx="330" cy="255" r="13" fill="#c96a3f" opacity="0.11" filter="url(#blurSm)"/>
+  <circle cx="520" cy="60" r="7" fill="#c96a3f" opacity="0.16" filter="url(#blurSm)"/>
+  <circle cx="55" cy="235" r="6" fill="#c96a3f" opacity="0.15" filter="url(#blurSm)"/>
+  <circle cx="640" cy="230" r="10" fill="#c96a3f" opacity="0.08" filter="url(#blurSm)"/>
+
+  <line x1="50" y1="292" x2="860" y2="292" stroke="#e5dbc9" stroke-width="1.25"/>
+
+  <!-- a few false starts along the uncertain stretch -->
+  <circle cx="95" cy="172" r="3" fill="#b2532e" opacity="0.3"/>
+  <circle cx="168" cy="252" r="2.5" fill="#b2532e" opacity="0.3"/>
+  <circle cx="236" cy="178" r="3" fill="#b2532e" opacity="0.3"/>
+
+  <!-- the uncertain early stretch, hand-drawn feel -->
   <path d="M70,220 L110,193 L142,232 L182,198 L222,236 L262,205"
-        fill="none" stroke="#b7ac95" stroke-width="2.25" opacity="0.75"
+        fill="none" stroke="#b7ac95" stroke-width="2.25" opacity="0.8"
         stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- where it resolves into one clean line -->
-  <path d="M262,205 C342,176 418,160 480,140 C580,106 690,76 815,50"
-        fill="none" stroke="url(#pathGrad)" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- where it resolves and travels toward the light: soft glow halo, then a crisp line on top -->
+  <path d="M262,205 C342,176 418,160 480,140 C580,106 690,76 812,52"
+        fill="none" stroke="url(#pathGrad)" stroke-width="7" stroke-linecap="round"
+        opacity="0.45" filter="url(#blurSm)"/>
+  <path d="M262,205 C342,176 418,160 480,140 C580,106 690,76 812,52"
+        fill="none" stroke="url(#pathGrad)" stroke-width="3" stroke-linecap="round"/>
 
-  <circle cx="815" cy="50" r="7" fill="#8f3f22"/>
+  <!-- point of arrival -->
+  <circle cx="812" cy="52" r="12" fill="#e8935c" opacity="0.5" filter="url(#blurSm)"/>
+  <circle cx="812" cy="52" r="6" fill="#8f3f22"/>
 </svg>
