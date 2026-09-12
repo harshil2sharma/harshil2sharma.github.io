@@ -1,0 +1,44 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Harshil Sharma"
+  description: "Data Scientist & AI Engineer — portfolio and blog"
+  site-url: "https://harshil2sharma.github.io"
+  favicon: images/favicon.svg
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - href: blog.qmd
+        text: Blog
+    right:
+      - icon: github
+        href: https://github.com/harshil2sharma
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/harshil-sharma-002ms2012/
+        aria-label: LinkedIn
+      - icon: envelope
+        href: mailto:harshil2012sharma@gmail.com
+        aria-label: Email
+  page-footer:
+    left: "© 2026 Harshil Sharma"
+    right:
+      - icon: github
+        href: https://github.com/harshil2sharma
+      - icon: linkedin
+        href: https://www.linkedin.com/in/harshil-sharma-002ms2012/
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    css: styles.css
+    toc: false
+    grid:
+      body-width: 850px

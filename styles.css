@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,500;0,600;1,500&display=swap');
+
+/* ---- General rhythm ---- */
+main.content {
+  padding-top: 2.2rem;
+}
+
+p {
+  line-height: 1.7;
+}
+
+/* ---- Home page (about-page "trestles" template) ---- */
+.about-entity {
+  padding-top: 1rem;
+}
+
+.about-entity .about-image {
+  box-shadow: 0 6px 24px rgba(43, 43, 43, 0.12);
+}
+
+.about-entity-name {
+  font-size: 2.1rem;
+  margin-bottom: 0.15rem;
+}
+
+.about-links .about-link {
+  border: 1px solid #e4dccb;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.about-links .about-link:hover {
+  color: #b2532e;
+  border-color: #b2532e;
+}
+
+.about-contents .lead,
+.about-description {
+  color: #55503f;
+}
+
+/* ---- Blog listing ---- */
+.quarto-listing .listing-item {
+  border-bottom: 1px solid #ece5d8;
+  padding-bottom: 1rem;
+}
+
+.listing-date {
+  color: #948c78;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* ---- Footer ---- */
+.nav-footer {
+  border-top: 1px solid #ece5d8;
+  font-size: 0.85rem;
+}

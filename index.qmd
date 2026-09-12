@@ -1,0 +1,24 @@
+---
+title: "Harshil Sharma"
+image: images/profile.svg
+about:
+  template: trestles
+  image-shape: round
+  image-width: 14em
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/harshil-sharma-002ms2012/
+    - icon: github
+      text: GitHub
+      href: https://github.com/harshil2sharma
+    - icon: envelope
+      text: Email
+      href: mailto:harshil2012sharma@gmail.com
+---
+
+Hi, I'm Harshil — a Data Scientist at **Fractal Analytics** in Bangalore, where I build GenAI and machine learning systems for clients across safety analytics, healthcare, and customer operations. I studied Computer Science with a specialization in Data Science at Symbiosis Institute of Technology, and my work since has moved from behavioural risk modeling to retrieval-augmented generation, multi-agent orchestration, and production LLM systems.
+
+I like turning messy, real-world problems into models and pipelines people can actually rely on — and I'm just as happy debugging a stubborn retrieval pipeline at 11pm as I am sketching out a new project on a whiteboard.
+
+Outside of work, I run and cycle, cook more ambitiously than I should, and volunteer as a content creator for causes I care about. Take a look at [what I've built](about.qmd) or read a few [notes from the field](blog.qmd).

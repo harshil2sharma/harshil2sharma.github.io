@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c96a3f"/>
+      <stop offset="100%" stop-color="#8f3f22"/>
+    </linearGradient>
+  </defs>
+  <circle cx="200" cy="200" r="200" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="188" fill="none" stroke="#faf7f2" stroke-opacity="0.25" stroke-width="2"/>
+  <text x="200" y="235" font-family="Lora, Georgia, serif" font-size="140" font-weight="600"
+        fill="#faf7f2" text-anchor="middle">HS</text>
+</svg>

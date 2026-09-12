@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "My path into data science\n\n\nFrom a face-recognition internship to building GenAI systems in production — a short recap of how I got here.\n\n\n\n\n\nSeptember 12, 2026\n\n\nHarshil Sharma\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Harshil Sharma",
+    "section": "",
+    "text": "Hi, I’m Harshil — a Data Scientist at Fractal Analytics in Bangalore, where I build GenAI and machine learning systems for clients across safety analytics, healthcare, and customer operations. I studied Computer Science with a specialization in Data Science at Symbiosis Institute of Technology, and my work since has moved from behavioural risk modeling to retrieval-augmented generation, multi-agent orchestration, and production LLM systems.\nI like turning messy, real-world problems into models and pipelines people can actually rely on — and I’m just as happy debugging a stubborn retrieval pipeline at 11pm as I am sketching out a new project on a whiteboard.\nOutside of work, I run and cycle, cook more ambitiously than I should, and volunteer as a content creator for causes I care about. Take a look at what I’ve built or read a few notes from the field."
+  },
+  {
+    "objectID": "posts/my-path-into-data-science/index.html",
+    "href": "posts/my-path-into-data-science/index.html",
+    "title": "My path into data science",
+    "section": "",
+    "text": "A network of small decisions, each one connected to the next.\n\n\nI didn’t set out with a straight line to “Data Scientist.” It started with a CS degree and a specialization in data science that I picked almost on instinct, followed by an internship at C-DOT where I built a deep-learning face recognition system and, in the same stretch, a multimodal dashboard for disaster response. Around the same time I was pulling together ontology graphs in Neo4j for a missile classification NLP project — two problems that had almost nothing in common except that both rewarded patience with messy data.\nJoining Fractal Analytics as a Data Scientist in September 2024 changed the shape of the work more than the substance of it. I went from single models solving one problem to systems: RAG pipelines that need to retrieve the right document out of thousands, agentic workflows that have to decide which tool to call and when, and vision-language models that have to read a scanned PDF as reliably as a person would. The common thread across BHP’s safety analytics, Carrier’s order automation, and Molina’s agentic claims processing has been the same lesson repeated in different clothes: the model is rarely the hard part, the pipeline around it is.\nWhat surprised me most is how much of this work is still craft rather than formula — deciding where to put a human checkpoint, how much context an agent actually needs, when a smaller fine-tuned model beats a bigger general one. I’m building this site partly to keep a record of that craft as it develops, and partly because writing things down is still the fastest way I know to find out whether I actually understand them."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I grew up and studied in India, and graduated in July 2024 with a B.Tech in Computer Science, specializing in Data Science, from Symbiosis Institute of Technology, Pune. Before that I interned at C-DOT in Delhi, working on deep-learning-based biometric face recognition and a multimodal disaster-management dashboard, and spent time as a data engineering researcher on the KG4ASTRA extension programme, building ontology and hierarchy graphs in Neo4j for missile classification NLP models.\nSince September 2024 I’ve been a Data Scientist at Fractal Analytics in Bangalore, working across several client engagements:\n\nBehavioural Data Science (BHP Australia) — GenAI-driven safety risk modeling and cognitive/behavioral analytics using neuroscience inputs.\nOrder Automation (Carrier, AWS GenAI) — vision-language models (AWS Nova, Claude, Mistral) for PDF ingestion and RAG-based document understanding.\nAgentic AI Systems (Molina Healthcare) — LLM-based agents and orchestration layers, tuned for latency and compute efficiency.\nMulti-Agent Workflows (Cogentiq AI) — claim validation with LangGraph and CrewAI, built around prompt-engineered LLM pipelines.\nCustomer Service Automation (Flyfish AI) — RAG pipelines over ChromaDB and Elasticsearch, tuned for production use."
+  },
+  {
+    "objectID": "about.html#background",
+    "href": "about.html#background",
+    "title": "About",
+    "section": "",
+    "text": "I grew up and studied in India, and graduated in July 2024 with a B.Tech in Computer Science, specializing in Data Science, from Symbiosis Institute of Technology, Pune. Before that I interned at C-DOT in Delhi, working on deep-learning-based biometric face recognition and a multimodal disaster-management dashboard, and spent time as a data engineering researcher on the KG4ASTRA extension programme, building ontology and hierarchy graphs in Neo4j for missile classification NLP models.\nSince September 2024 I’ve been a Data Scientist at Fractal Analytics in Bangalore, working across several client engagements:\n\nBehavioural Data Science (BHP Australia) — GenAI-driven safety risk modeling and cognitive/behavioral analytics using neuroscience inputs.\nOrder Automation (Carrier, AWS GenAI) — vision-language models (AWS Nova, Claude, Mistral) for PDF ingestion and RAG-based document understanding.\nAgentic AI Systems (Molina Healthcare) — LLM-based agents and orchestration layers, tuned for latency and compute efficiency.\nMulti-Agent Workflows (Cogentiq AI) — claim validation with LangGraph and CrewAI, built around prompt-engineered LLM pipelines.\nCustomer Service Automation (Flyfish AI) — RAG pipelines over ChromaDB and Elasticsearch, tuned for production use."
+  },
+  {
+    "objectID": "about.html#what-i-work-with",
+    "href": "about.html#what-i-work-with",
+    "title": "About",
+    "section": "What I work with",
+    "text": "What I work with\nLanguages: Python, R, SQL ML / Deep Learning: TensorFlow, PyTorch, Keras, scikit-learn, OpenCV GenAI: GPT, Claude, LangChain, RAG pipelines, multi-agent systems, prompt engineering, LLMOps Cloud & tooling: AWS, Docker, Git, GitLab Data: MongoDB, Elasticsearch, Neo4j Visualization: Power BI, Tableau\nA few projects I’ve enjoyed building: an ML model classifying hazardous asteroids from NASA/JPL data, Kitna Kharcha — a location-aware urban financial planning tool, and SneakerXchange, an HCI-driven reselling platform prototype accepted for presentation at ICICC 2026 (Springer, top 15% of submissions)."
+  },
+  {
+    "objectID": "about.html#outside-of-data-science",
+    "href": "about.html#outside-of-data-science",
+    "title": "About",
+    "section": "Outside of data science",
+    "text": "Outside of data science\nWhen I’m away from a notebook, I’m usually running or cycling — training for the next race is a nice antidote to a week of debugging pipelines. I bake and cook more than is strictly reasonable, and I’ve picked up a handful of wins over the years in general knowledge, art, and dance competitions. I also volunteer as a content creator for Kshamata in Mumbai and DefEating Disorders in New York, and try to use whatever platform I have to advocate for human trafficking survivors and eating disorder awareness.\nYou can find more of my work on GitHub or connect with me on LinkedIn."
+  }
+]
