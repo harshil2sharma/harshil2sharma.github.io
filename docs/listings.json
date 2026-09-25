@@ -2,6 +2,9 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/penguin-species-classifier/index.html",
+      "/posts/penguin-body-mass/index.html",
+      "/posts/r-and-python/index.html",
       "/posts/my-path-into-data-science/index.html"
     ]
   }

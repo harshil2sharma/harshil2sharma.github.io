@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "My path into data science\n\n\nFrom a face-recognition internship to building GenAI systems in production — a short recap of how I got here.\n\n\n\n\n\nSeptember 12, 2026\n\n\nHarshil Sharma\n\n\n\n\n\nNo matching items"
+    "text": "Classifying penguin species from their measurements\n\n\nTraining a random forest to tell penguin species apart from bill and flipper measurements, in Python.\n\n\n\n\n\nSeptember 25, 2026\n\n\nHarshil Sharma\n\n\n\n\n\n\n\n\n\n\n\n\nWhat predicts a penguin’s body mass?\n\n\nAn EDA and linear model of penguin body mass using the Palmer Penguins dataset, in R.\n\n\n\n\n\nSeptember 25, 2026\n\n\nHarshil Sharma\n\n\n\n\n\n\n\n\n\n\n\n\nR and Python in one document\n\n\nA bonus post: R and Python share one session via reticulate, passing objects between them in both directions.\n\n\n\n\n\nSeptember 25, 2026\n\n\nHarshil Sharma\n\n\n\n\n\n\n\n\n\n\n\n\nMy path into data science\n\n\nFrom a face-recognition internship to building GenAI systems in production — a short recap of how I got here.\n\n\n\n\n\nSeptember 12, 2026\n\n\nHarshil Sharma\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -14,11 +14,109 @@
     "text": "Hi, I’m Harshil — currently pursuing the Master of Data Science program at the University of British Columbia. Before that, I was a Data Scientist at Fractal Analytics in Bangalore, building GenAI and machine learning systems for clients across safety analytics, healthcare, and customer operations. I studied Computer Science with a specialization in Data Science at Symbiosis Institute of Technology, and my work has moved from behavioural risk modeling to retrieval-augmented generation, multi-agent orchestration, and production LLM systems — knowledge I’m now looking to deepen at UBC.\nI like turning messy, real-world problems into models and pipelines people can actually rely on — and I’m just as happy debugging a stubborn retrieval pipeline at 11pm as I am sketching out a new project on a whiteboard.\nOutside of work, I run and cycle, and cook more ambitiously than I should. Take a look at what I’ve built or read a few notes from the field."
   },
   {
+    "objectID": "posts/penguin-body-mass/index.html",
+    "href": "posts/penguin-body-mass/index.html",
+    "title": "What predicts a penguin’s body mass?",
+    "section": "",
+    "text": "Data: Palmer Penguins, Palmer Station Antarctica LTER, released under a CC0 1.0 licence. Citation: Horst AM, Hill AP, Gorman KB (2020). palmerpenguins R package version 0.1.1. The data ships inside the palmerpenguins R package, so no download or network access is needed to reproduce this post.\nThree species of penguin were measured on three islands in the Palmer Archipelago, Antarctica. I wanted to know: how much of a penguin’s body mass can be explained by its bill and flipper measurements, once species and sex are accounted for?\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(broom)\nlibrary(knitr)"
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#cleaning-the-data",
+    "href": "posts/penguin-body-mass/index.html#cleaning-the-data",
+    "title": "What predicts a penguin’s body mass?",
+    "section": "Cleaning the data",
+    "text": "Cleaning the data\nA handful of rows are missing measurements or sex entirely. Since the model below needs complete cases across all predictors, I drop them here rather than silently letting lm() do it, and report how much data that costs me.\n\npenguins_clean &lt;- penguins |&gt;\n  filter(!is.na(sex)) |&gt;\n  select(species, island, bill_length_mm, bill_depth_mm, flipper_length_mm,\n         body_mass_g, sex) |&gt;\n  na.omit()\n\nn_dropped &lt;- nrow(penguins) - nrow(penguins_clean)\ncat(\"Rows in raw data:\", nrow(penguins), \"\\n\")\n\nRows in raw data: 344 \n\ncat(\"Rows after dropping incomplete cases:\", nrow(penguins_clean), \"\\n\")\n\nRows after dropping incomplete cases: 333 \n\ncat(\"Rows dropped:\", n_dropped, \"\\n\")\n\nRows dropped: 11 \n\n\nThat drops 11 of the original 344 rows, leaving 333 penguins with complete measurements."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#body-mass-by-species-and-sex",
+    "href": "posts/penguin-body-mass/index.html#body-mass-by-species-and-sex",
+    "title": "What predicts a penguin’s body mass?",
+    "section": "Body mass by species and sex",
+    "text": "Body mass by species and sex\n\npenguin_summary &lt;- penguins_clean |&gt;\n  group_by(species, sex) |&gt;\n  summarise(\n    n = n(),\n    mean_mass_g = round(mean(body_mass_g), 1),\n    sd_mass_g = round(sd(body_mass_g), 1),\n    mean_flipper_mm = round(mean(flipper_length_mm), 1),\n    .groups = \"drop\"\n  )\n\nkable(penguin_summary,\n      caption = \"Body mass and flipper length by species and sex.\")\n\n\nBody mass and flipper length by species and sex.\n\n\nspecies\nsex\nn\nmean_mass_g\nsd_mass_g\nmean_flipper_mm\n\n\n\n\nAdelie\nfemale\n73\n3368.8\n269.4\n187.8\n\n\nAdelie\nmale\n73\n4043.5\n346.8\n192.4\n\n\nChinstrap\nfemale\n34\n3527.2\n285.3\n191.7\n\n\nChinstrap\nmale\n34\n3939.0\n362.1\n199.9\n\n\nGentoo\nfemale\n58\n4679.7\n281.6\n212.7\n\n\nGentoo\nmale\n61\n5484.8\n313.2\n221.5\n\n\n\n\n\nGentoo penguins are noticeably heavier than Adelie or Chinstrap, and within every species males run heavier than females. Flipper length tracks the same pattern, which suggests it might be a useful predictor of mass alongside bill measurements.\n\nggplot(penguins_clean, aes(x = species, y = body_mass_g, fill = sex)) +\n  geom_boxplot(alpha = 0.8) +\n  labs(\n    x = \"Species\",\n    y = \"Body mass (g)\",\n    fill = \"Sex\",\n    title = \"Gentoo penguins are the heaviest of the three species\"\n  ) +\n  theme_minimal(base_size = 13)\n\n\n\n\n\n\n\nFigure 1: Body mass of penguins by species, split by sex."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#modelling-body-mass",
+    "href": "posts/penguin-body-mass/index.html#modelling-body-mass",
+    "title": "What predicts a penguin’s body mass?",
+    "section": "Modelling body mass",
+    "text": "Modelling body mass\nI fit a linear model of body mass against bill length, flipper length, species, and sex. Species and sex are included because Figure 1 suggests both shift the whole distribution, not just the average.\n\nmass_model &lt;- lm(\n  body_mass_g ~ bill_length_mm + flipper_length_mm + species + sex,\n  data = penguins_clean\n)\n\nkable(tidy(mass_model, conf.int = TRUE),\n      digits = 2,\n      caption = \"Coefficient estimates for the body mass model.\")\n\n\nCoefficient estimates for the body mass model.\n\n\n\n\n\n\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\nconf.low\nconf.high\n\n\n\n\n(Intercept)\n-759.06\n541.38\n-1.40\n0.16\n-1824.08\n305.96\n\n\nbill_length_mm\n21.63\n7.15\n3.03\n0.00\n7.57\n35.69\n\n\nflipper_length_mm\n17.85\n2.90\n6.15\n0.00\n12.14\n23.55\n\n\nspeciesChinstrap\n-291.71\n81.50\n-3.58\n0.00\n-452.04\n-131.38\n\n\nspeciesGentoo\n707.03\n94.36\n7.49\n0.00\n521.40\n892.66\n\n\nsexmale\n465.40\n43.08\n10.80\n0.00\n380.64\n550.15\n\n\n\n\n\n\nglance_stats &lt;- glance(mass_model)\nkable(glance_stats[, c(\"r.squared\", \"adj.r.squared\", \"sigma\", \"df.residual\")],\n      digits = 3,\n      caption = \"Overall fit of the body mass model.\")\n\n\nOverall fit of the body mass model.\n\n\nr.squared\nadj.r.squared\nsigma\ndf.residual\n\n\n\n\n0.871\n0.869\n291.955\n327\n\n\n\n\n\nThe model explains about 87.1% of the variance in body mass (adjusted R² = 0.869). Flipper length has the largest standardised effect of the continuous predictors, being Gentoo adds a large positive shift on top of that, and being male adds a further few hundred grams on average, holding the other measurements fixed. Bill length alone is a weaker predictor once flipper length and species are already in the model, which fits the biology: flipper length and species are closely tied to overall skeletal size, while bill length varies more independently of body mass within a species."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#what-i-found",
+    "href": "posts/penguin-body-mass/index.html#what-i-found",
+    "title": "What predicts a penguin’s body mass?",
+    "section": "What I found",
+    "text": "What I found\nBody size in these penguins is driven mostly by species and flipper length, with sex adding a consistent but smaller shift. A simple linear model with four predictors already accounts for the large majority of the variation in body mass, which suggests there isn’t much left on the table for a more complex model to pick up without additional variables (diet, foraging range, or year, for instance) that aren’t in this dataset."
+  },
+  {
+    "objectID": "posts/penguin-species-classifier/index.html",
+    "href": "posts/penguin-species-classifier/index.html",
+    "title": "Classifying penguin species from their measurements",
+    "section": "",
+    "text": "Data: Palmer Penguins, Palmer Station Antarctica LTER, released under a CC0 1.0 licence. Citation: Horst AM, Hill AP, Gorman KB (2020). palmerpenguins R package version 0.1.1. This post uses the palmerpenguins Python package, which bundles the same dataset, so no download or network access is needed to reproduce it.\nThe companion R post asks how body mass relates to a penguin’s other measurements. Here I ask a different question of the same data: given only a penguin’s bill and flipper measurements, how well can a model tell the three species apart?\nimport sys\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay\n\nprint(sys.executable)\n\n/Users/harshilsharma/Desktop/harshilsharma.github.io/.venv/bin/python3\nPrinting sys.executable confirms the kernel is running inside this project’s .venv, which is what makes the environment reproducible from uv.lock rather than whatever Python happens to be on a grader’s PATH."
+  },
+  {
+    "objectID": "posts/penguin-species-classifier/index.html#preparing-the-data",
+    "href": "posts/penguin-species-classifier/index.html#preparing-the-data",
+    "title": "Classifying penguin species from their measurements",
+    "section": "Preparing the data",
+    "text": "Preparing the data\n\npenguins = load_penguins()\nfeature_cols = [\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\", \"body_mass_g\"]\n\npenguins_clean = penguins.dropna(subset=feature_cols + [\"species\"]).reset_index(drop=True)\n\nprint(f\"Rows before dropping missing values: {len(penguins)}\")\nprint(f\"Rows after: {len(penguins_clean)}\")\nprint(penguins_clean[\"species\"].value_counts())\n\nRows before dropping missing values: 344\nRows after: 342\nspecies\nAdelie       151\nGentoo       123\nChinstrap     68\nName: count, dtype: int64\n\n\nI keep only the four numeric measurements as features and drop rows missing any of them or the species label. That leaves a moderately imbalanced but workable set of three classes."
+  },
+  {
+    "objectID": "posts/penguin-species-classifier/index.html#splitting-and-fitting-a-classifier",
+    "href": "posts/penguin-species-classifier/index.html#splitting-and-fitting-a-classifier",
+    "title": "Classifying penguin species from their measurements",
+    "section": "Splitting and fitting a classifier",
+    "text": "Splitting and fitting a classifier\n\nX = penguins_clean[feature_cols]\ny = penguins_clean[\"species\"]\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.3, random_state=42, stratify=y\n)\n\nclf = RandomForestClassifier(n_estimators=200, random_state=42)\nclf.fit(X_train, y_train)\n\ny_pred = clf.predict(X_test)\naccuracy = accuracy_score(y_test, y_pred)\nprint(f\"Test accuracy: {accuracy:.3f}\")\n\nTest accuracy: 0.990\n\n\nA 200-tree random forest, trained on 70% of the data and evaluated on the held-out 30%, already separates the species almost perfectly from just four measurements.\n\nfig, ax = plt.subplots(figsize=(5, 5))\nConfusionMatrixDisplay.from_predictions(\n    y_test, y_pred, labels=clf.classes_, ax=ax, colorbar=False\n)\nax.set_title(\"Predicted vs. actual species\")\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Confusion matrix for species predictions on the held-out test set.\n\n\n\n\n\n\nimportances = pd.Series(clf.feature_importances_, index=feature_cols).sort_values()\n\nfig, ax = plt.subplots(figsize=(6, 4))\nimportances.plot(kind=\"barh\", ax=ax, color=\"#4C72B0\")\nax.set_xlabel(\"Feature importance\")\nax.set_ylabel(\"\")\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 2: Relative importance of each measurement in the random forest."
+  },
+  {
+    "objectID": "posts/penguin-species-classifier/index.html#what-i-found",
+    "href": "posts/penguin-species-classifier/index.html#what-i-found",
+    "title": "Classifying penguin species from their measurements",
+    "section": "What I found",
+    "text": "What I found\nThe classifier reaches 99.0% accuracy on the test set, with almost all of the (rare) confusion happening between Adelie and Chinstrap, the two species that overlap most in body size. Flipper length and bill length dominate the model’s decisions, while bill depth and body mass contribute comparatively little on top of them. That lines up with the biology: bill length is the single most species-specific measurement in this dataset, since Gentoo and Chinstrap bills differ from Adelie’s far more than their depths do."
+  },
+  {
     "objectID": "posts/my-path-into-data-science/index.html",
     "href": "posts/my-path-into-data-science/index.html",
     "title": "My path into data science",
     "section": "",
     "text": "Same curiosity, bigger possibilities.\n\n\nI didn’t set out with a straight line to “Data Scientist.” It started with a CS degree and a specialization in data science that I picked almost on instinct, followed by an internship at C-DOT where I built a deep-learning face recognition system and, in the same stretch, a multimodal dashboard for disaster response. Around the same time I was pulling together ontology graphs in Neo4j for a missile classification NLP project — two problems that had almost nothing in common except that both rewarded patience with messy data.\nJoining Fractal Analytics as a Data Scientist in September 2024 changed the shape of the work more than the substance of it. I went from single models solving one problem to systems: RAG pipelines that need to retrieve the right document out of thousands, agentic workflows that have to decide which tool to call and when, and vision-language models that have to read a scanned PDF as reliably as a person would. The common thread across BHP’s safety analytics, Carrier’s order automation, and Molina’s agentic claims processing has been the same lesson repeated in different clothes: the model is rarely the hard part, the pipeline around it is.\nWhat surprised me most is how much of this work is still craft rather than formula — deciding where to put a human checkpoint, how much context an agent actually needs, when a smaller fine-tuned model beats a bigger general one. I’m building this site partly to keep a record of that craft as it develops, and partly because writing things down is still the fastest way I know to find out whether I actually understand them."
+  },
+  {
+    "objectID": "posts/r-and-python/index.html",
+    "href": "posts/r-and-python/index.html",
+    "title": "R and Python in one document",
+    "section": "",
+    "text": "Data: Palmer Penguins, Palmer Station Antarctica LTER, released under a CC0 1.0 licence. Citation: Horst AM, Hill AP, Gorman KB (2020). palmerpenguins R package version 0.1.1. Loaded here through the Python package, again with no network access needed.\nThe R post and the Python post each stay in one language. This one doesn’t: it’s a single .qmd where {r} chunks run through knitr, and knitr hands {python} chunks to the same Python session via reticulate. An object computed in one language is read directly by the other, no file written to disk in between."
+  },
+  {
+    "objectID": "posts/r-and-python/index.html#pointing-reticulate-at-this-projects-environment",
+    "href": "posts/r-and-python/index.html#pointing-reticulate-at-this-projects-environment",
+    "title": "R and Python in one document",
+    "section": "Pointing reticulate at this project’s environment",
+    "text": "Pointing reticulate at this project’s environment\nrenv manages this project’s R packages, but reticulate still needs to be told which Python to use. It should be the same .venv that uv run quarto render builds two directories up from this post.\n\nlibrary(reticulate)\n\nvenv_path &lt;- normalizePath(file.path(getwd(), \"..\", \"..\", \".venv\"), mustWork = TRUE)\nuse_virtualenv(venv_path, required = TRUE)\npy_config()$python\n\n[1] \"/Users/harshilsharma/Desktop/harshilsharma.github.io/.venv/bin/python\""
+  },
+  {
+    "objectID": "posts/r-and-python/index.html#python-computes-r-plots",
+    "href": "posts/r-and-python/index.html#python-computes-r-plots",
+    "title": "R and Python in one document",
+    "section": "Python computes, R plots",
+    "text": "Python computes, R plots\nA Python chunk loads the penguins and works out the mean flipper length per species.\n\nfrom palmerpenguins import load_penguins\n\npenguins = load_penguins()\nspecies_summary = (\n    penguins.dropna(subset=[\"flipper_length_mm\"])\n    .groupby(\"species\", as_index=False)[\"flipper_length_mm\"]\n    .mean()\n    .rename(columns={\"flipper_length_mm\": \"mean_flipper_mm\"})\n)\nspecies_summary\n\n     species  mean_flipper_mm\n0     Adelie       189.953642\n1  Chinstrap       195.823529\n2     Gentoo       217.186992\n\n\npy$species_summary reads that pandas DataFrame straight into R as a data frame, with no CSV round-trip, and ggplot draws it.\n\nlibrary(ggplot2)\n\nspecies_summary_r &lt;- py$species_summary\n\nggplot(species_summary_r, aes(x = species, y = mean_flipper_mm, fill = species)) +\n  geom_col(show.legend = FALSE) +\n  labs(x = \"Species\", y = \"Mean flipper length (mm)\") +\n  theme_minimal(base_size = 13)\n\n\n\n\n\n\n\nFigure 1: Mean flipper length by species: computed in Python, plotted in R."
+  },
+  {
+    "objectID": "posts/r-and-python/index.html#r-computes-python-uses-it-back",
+    "href": "posts/r-and-python/index.html#r-computes-python-uses-it-back",
+    "title": "R and Python in one document",
+    "section": "R computes, Python uses it back",
+    "text": "R computes, Python uses it back\nThe direction reverses just as easily. An R chunk sets a threshold, and a Python chunk reads it straight out of the R session with r..\n\nheavy_threshold_g &lt;- 4500\nheavy_threshold_g\n\n[1] 4500\n\n\n\nheavy_count = int((penguins[\"body_mass_g\"] &gt; r.heavy_threshold_g).sum())\ntotal = len(penguins.dropna(subset=[\"body_mass_g\"]))\nprint(f\"{heavy_count} of {total} penguins weigh more than {r.heavy_threshold_g:.0f}g\")\n\n115 of 342 penguins weigh more than 4500g"
+  },
+  {
+    "objectID": "posts/r-and-python/index.html#what-this-shows",
+    "href": "posts/r-and-python/index.html#what-this-shows",
+    "title": "R and Python in one document",
+    "section": "What this shows",
+    "text": "What this shows\nNothing here needed a shared file or a second render pass: species_summary crossed from Python into R as py$species_summary, and heavy_threshold_g crossed back from R into Python as r.heavy_threshold_g, in the same quarto render call. The only extra setup was telling reticulate which virtual environment to use, since without that line it falls back to whatever Python it finds first on the system rather than this project’s pinned one."
   },
   {
     "objectID": "about.html",
