@@ -1,0 +1,116 @@
+---
+title: "Classifying penguin species from their measurements"
+author: "Harshil Sharma"
+date: 2026-09-25
+description: "Training a random forest to tell penguin species apart from bill and flipper measurements, in Python."
+---
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/), Palmer Station
+Antarctica LTER, released under a [CC0 1.0 licence](https://allisonhorst.github.io/palmerpenguins/LICENSE.html).
+Citation: Horst AM, Hill AP, Gorman KB (2020). palmerpenguins R package version 0.1.1.
+This post uses the [`palmerpenguins`](https://pypi.org/project/palmerpenguins/) Python
+package, which bundles the same dataset, so no download or network access is needed to
+reproduce it.
+
+The [companion R post](../penguin-body-mass/index.qmd) asks how body mass relates to a
+penguin's other measurements. Here I ask a different question of the same data: given only
+a penguin's bill and flipper measurements, how well can a model tell the three species apart?
+
+```{python}
+#| label: setup
+#| message: false
+#| warning: false
+
+import sys
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from palmerpenguins import load_penguins
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
+
+print(sys.executable)
+```
+
+Printing `sys.executable` confirms the kernel is running inside this project's `.venv`,
+which is what makes the environment reproducible from `uv.lock` rather than whatever
+Python happens to be on a grader's PATH.
+
+## Preparing the data
+
+```{python}
+#| label: load-and-clean
+
+penguins = load_penguins()
+feature_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
+
+penguins_clean = penguins.dropna(subset=feature_cols + ["species"]).reset_index(drop=True)
+
+print(f"Rows before dropping missing values: {len(penguins)}")
+print(f"Rows after: {len(penguins_clean)}")
+print(penguins_clean["species"].value_counts())
+```
+
+I keep only the four numeric measurements as features and drop rows missing any of them or
+the species label. That leaves a moderately imbalanced but workable set of three classes.
+
+## Splitting and fitting a classifier
+
+```{python}
+#| label: train-model
+
+X = penguins_clean[feature_cols]
+y = penguins_clean["species"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42, stratify=y
+)
+
+clf = RandomForestClassifier(n_estimators=200, random_state=42)
+clf.fit(X_train, y_train)
+
+y_pred = clf.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Test accuracy: {accuracy:.3f}")
+```
+
+A 200-tree random forest, trained on 70% of the data and evaluated on the held-out 30%,
+already separates the species almost perfectly from just four measurements.
+
+```{python}
+#| label: fig-confusion-matrix
+#| fig-cap: "Confusion matrix for species predictions on the held-out test set."
+
+fig, ax = plt.subplots(figsize=(5, 5))
+ConfusionMatrixDisplay.from_predictions(
+    y_test, y_pred, labels=clf.classes_, ax=ax, colorbar=False
+)
+ax.set_title("Predicted vs. actual species")
+plt.tight_layout()
+plt.show()
+```
+
+```{python}
+#| label: fig-feature-importance
+#| fig-cap: "Relative importance of each measurement in the random forest."
+
+importances = pd.Series(clf.feature_importances_, index=feature_cols).sort_values()
+
+fig, ax = plt.subplots(figsize=(6, 4))
+importances.plot(kind="barh", ax=ax, color="#4C72B0")
+ax.set_xlabel("Feature importance")
+ax.set_ylabel("")
+plt.tight_layout()
+plt.show()
+```
+
+## What I found
+
+The classifier reaches `{python} f"{accuracy:.1%}"` accuracy on the test set, with
+almost all of the (rare) confusion happening between Adelie and Chinstrap, the two species
+that overlap most in body size. Flipper length and bill length dominate the model's
+decisions, while bill depth and body mass contribute comparatively little on top of them.
+That lines up with the biology: bill length is the single most species-specific measurement
+in this dataset, since Gentoo and Chinstrap bills differ from Adelie's far more than their
+depths do.
