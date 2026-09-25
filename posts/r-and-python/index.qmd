@@ -1,0 +1,101 @@
+---
+title: "R and Python in one document"
+author: "Harshil Sharma"
+date: 2026-09-25
+description: "A bonus post: R and Python share one session via reticulate, passing objects between them in both directions."
+---
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/), Palmer Station
+Antarctica LTER, released under a [CC0 1.0 licence](https://allisonhorst.github.io/palmerpenguins/LICENSE.html).
+Citation: Horst AM, Hill AP, Gorman KB (2020). palmerpenguins R package version 0.1.1.
+Loaded here through the Python package, again with no network access needed.
+
+The [R post](../penguin-body-mass/index.qmd) and the
+[Python post](../penguin-species-classifier/index.qmd) each stay in one language. This one
+doesn't: it's a single `.qmd` where `{r}` chunks run through `knitr`, and `knitr` hands
+`{python}` chunks to the same Python session via
+[reticulate](https://rstudio.github.io/reticulate/). An object computed in one language is
+read directly by the other, no file written to disk in between.
+
+## Pointing reticulate at this project's environment
+
+`renv` manages this project's R packages, but reticulate still needs to be told which
+Python to use. It should be the same `.venv` that `uv run quarto render` builds two
+directories up from this post.
+
+```{r}
+#| label: setup-reticulate
+#| message: false
+#| warning: false
+
+library(reticulate)
+
+venv_path <- normalizePath(file.path(getwd(), "..", "..", ".venv"), mustWork = TRUE)
+use_virtualenv(venv_path, required = TRUE)
+py_config()$python
+```
+
+## Python computes, R plots
+
+A Python chunk loads the penguins and works out the mean flipper length per species.
+
+```{python}
+#| label: python-compute
+
+from palmerpenguins import load_penguins
+
+penguins = load_penguins()
+species_summary = (
+    penguins.dropna(subset=["flipper_length_mm"])
+    .groupby("species", as_index=False)["flipper_length_mm"]
+    .mean()
+    .rename(columns={"flipper_length_mm": "mean_flipper_mm"})
+)
+species_summary
+```
+
+`py$species_summary` reads that pandas `DataFrame` straight into R as a data frame, with no
+CSV round-trip, and ggplot draws it.
+
+```{r}
+#| label: fig-flipper-by-species
+#| fig-cap: "Mean flipper length by species: computed in Python, plotted in R."
+#| message: false
+
+library(ggplot2)
+
+species_summary_r <- py$species_summary
+
+ggplot(species_summary_r, aes(x = species, y = mean_flipper_mm, fill = species)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Species", y = "Mean flipper length (mm)") +
+  theme_minimal(base_size = 13)
+```
+
+## R computes, Python uses it back
+
+The direction reverses just as easily. An R chunk sets a threshold, and a Python chunk
+reads it straight out of the R session with `r.`.
+
+```{r}
+#| label: r-threshold
+
+heavy_threshold_g <- 4500
+heavy_threshold_g
+```
+
+```{python}
+#| label: python-use-r-object
+
+heavy_count = int((penguins["body_mass_g"] > r.heavy_threshold_g).sum())
+total = len(penguins.dropna(subset=["body_mass_g"]))
+print(f"{heavy_count} of {total} penguins weigh more than {r.heavy_threshold_g:.0f}g")
+```
+
+## What this shows
+
+Nothing here needed a shared file or a second render pass: `species_summary` crossed from
+Python into R as `py$species_summary`, and `heavy_threshold_g` crossed back from R into
+Python as `r.heavy_threshold_g`, in the same `quarto render` call. The only extra setup was
+telling reticulate which virtual environment to use, since without that line it falls back
+to whatever Python it finds first on the system rather than this project's pinned one.
